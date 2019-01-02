@@ -12,6 +12,7 @@ class Feed extends React.Component {
         return (
             <div className="feed">
                 <p>Feed</p>
+                <div>{this.props.feed.body}</div>
                 
             </div>
         )

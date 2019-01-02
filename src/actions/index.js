@@ -54,16 +54,14 @@ export const fetchFailure = (e) => ({
 
 async function fetchFeed (category = 'best') {
     
-    let response = await fetch(`cors-proxy.htmldriven/https://hacker-news.firebaseio.com/v0/newstories`, {
+    const response = await fetch(`https://cors-proxy.htmldriven.com/?url=https://hacker-news.firebaseio.com/v0/topstories.json`, {
         method: 'GET'
     });
-
-    let data = await response.json()
     
-    return data
+    return response.json()
 }
   
-export default function getFeed(category){
+const getFeed = (category) => {
   
     return async dispatch => {
         dispatch(feedLoading(true));
@@ -79,3 +77,5 @@ export default function getFeed(category){
         }
     };
 };
+
+export default getFeed
