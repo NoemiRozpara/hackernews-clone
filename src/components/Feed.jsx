@@ -7,12 +7,12 @@ class Feed extends React.Component {
     }
 
     render(){
-        console.log(this.props.feed)
-        console.log(this.props.error)
+        // console.log(typeof this.props.stories.body)
+        // console.log(this.props.error)
         return (
             <div className="feed">
                 <p>Feed</p>
-                <div>{this.props.feed.body}</div>
+                <div>{this.props.stories.body}</div>
                 
             </div>
         )

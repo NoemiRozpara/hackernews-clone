@@ -13,6 +13,11 @@ export const fetchFailure = (e) => ({
     payload: e
 })
 
+export const insertItem = (item) => ({
+    type: 'INSERT_ITEM',
+    payload: item
+})
+
 // function fetchFeed(category = 'best') {
 //     return new Promise((resolve, reject) => {
 //         return fetch(`cors-proxy.htmldriven/https://hacker-news.firebaseio.com/v0/${category}stories`)
@@ -52,24 +57,41 @@ export const fetchFailure = (e) => ({
 
 // export default getFeed
 
-async function fetchFeed (category = 'best') {
+async function fetchFeedIds (category = 'best') {
     
     const response = await fetch(`https://cors-proxy.htmldriven.com/?url=https://hacker-news.firebaseio.com/v0/topstories.json`, {
         method: 'GET'
     });
     
-    return response.json()
+    return response.json()//.split(',')
 }
+
+async function fetchFeedItem (id = 0) {
+    
+    const response = await fetch(`https://cors-proxy.htmldriven.com/?url=https://hacker-news.firebaseio.com/v0/item/${id}.json`, {
+        method: 'GET'
+    });
+    
+    return response.json()//.split(',')
+}
+
+
   
 const getFeed = (category) => {
   
     return async dispatch => {
         dispatch(feedLoading(true));
         try {
-            let data = await fetchFeed(category);
-            //data = await data.json();
-            //const stringified = JSON.stringify(data);
+            let data = await fetchFeedIds(category);
             dispatch(fetchSuccess(data));
+            // data.body.map(id => {
+            //     try {
+            //         let item = fetchFeedItem(id);
+            //         dispatch(insertItem(item));
+            //     } catch (e) {
+            //         fetchFailure(e)
+            //     }
+            // })
             dispatch(feedLoading(false));
         } catch (e) {
             dispatch(fetchFailure(e));

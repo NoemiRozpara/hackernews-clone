@@ -5,7 +5,7 @@ import Feed from '../components/Feed'
 import getFeed from '../actions'
 
 const mapStateToProps = state => ({
-    feed: state.feed.content,
+    stories: state.feed.stories,
     error: state.feed.error,
     loading: state.feed.loading
 });

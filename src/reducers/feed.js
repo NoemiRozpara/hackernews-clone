@@ -1,6 +1,6 @@
 let initialState = {
     loading: false,
-    content: '',
+    stories: '',
     error: false
 };
 
@@ -15,15 +15,26 @@ const feed = (state = initialState, action) => {
         case 'FETCH_SUCCESS':
             return {
                 ...state, 
-                content: action.payload,
+                stories: action.payload,
                 error: false
             }
 
         case 'FETCH_FAILURE':
             return {
                 ...state, 
-                content: '',
                 error: action.payload
+            }
+
+        case 'INSERT_ITEM':
+            let stories = [...state.stories];
+            stories.push({
+                id: action.payload.id,
+                title: action.payload.title,
+                url: action.payload.url
+            })
+            return {
+                ...state,
+                stories
             }
 
         default:

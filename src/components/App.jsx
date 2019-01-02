@@ -9,9 +9,7 @@ const App = (props) => {
       <div className="App">
         <Nav></Nav>
         <Feed></Feed>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
+        
       </div>
     );
 }
