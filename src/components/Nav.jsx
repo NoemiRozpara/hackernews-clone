@@ -4,7 +4,9 @@ const Nav = () => {
 
     return (
         <nav>
-            <a>My link</a>
+            <span>Newest</span>
+            <span>Featured</span>
+            <span>Best</span>
         </nav>
     )
 }
