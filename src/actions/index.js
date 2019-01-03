@@ -3,9 +3,8 @@ export const feedLoading = (ifTrue) => ({
     payload: ifTrue
 })
 
-export const fetchSuccess = (data) => ({
-    type: 'FETCH_SUCCESS',
-    payload: data
+export const fetchSuccess = () => ({
+    type: 'FETCH_SUCCESS'
 })
 
 export const fetchFailure = (e) => ({
@@ -59,7 +58,7 @@ export const insertItem = (item) => ({
 
 async function fetchFeedIds (category = 'best') {
     
-    const response = await fetch(`https://cors-proxy.htmldriven.com/?url=https://hacker-news.firebaseio.com/v0/topstories.json`, {
+    const response = await fetch(`https://cors-proxy.htmldriven.com/?url=https://hacker-news.firebaseio.com/v0/${category}stories.json`, {
         method: 'GET'
     });
     
@@ -81,20 +80,30 @@ const getFeed = (category) => {
   
     return async dispatch => {
         dispatch(feedLoading(true));
+        let ids, res;
         try {
-            let data = await fetchFeedIds(category);
-            dispatch(fetchSuccess(data));
-            // data.body.map(id => {
-            //     try {
-            //         let item = fetchFeedItem(id);
-            //         dispatch(insertItem(item));
-            //     } catch (e) {
-            //         fetchFailure(e)
-            //     }
-            // })
-            dispatch(feedLoading(false));
+            res = await fetchFeedIds(category);
         } catch (e) {
             dispatch(fetchFailure(e));
+            dispatch(feedLoading(false));
+        }
+        if(res.body.length > 0) {
+            ids = JSON.parse(res.body)
+            try {
+                ids.map(async (id, index) => {
+                    if(index < 30){
+                        let item = await fetchFeedItem(id);
+                        item = JSON.parse(item.body)
+                        dispatch(insertItem(item))
+                    }
+                })
+                dispatch(fetchSuccess(ids))
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        else{
+            dispatch(fetchFailure('empty response'));
             dispatch(feedLoading(false));
         }
     };

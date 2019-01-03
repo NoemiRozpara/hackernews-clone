@@ -3,16 +3,22 @@ import React from 'react'
 class Feed extends React.Component {
 
     componentDidMount(){
-        this.props.getFeed('newest');
+        this.props.getFeed('new');
     }
 
     render(){
-        // console.log(typeof this.props.stories.body)
+        console.log(this.props.stories)
         // console.log(this.props.error)
         return (
             <div className="feed">
                 <p>Feed</p>
-                <div>{this.props.stories.body}</div>
+                <div>
+                {this.props.stories.map((story, index) => {
+                    return <a key={index} href={story.url} target="_bank">
+                        <p>{story.title}</p>
+                    </a> 
+                })}
+                </div>
                 
             </div>
         )
