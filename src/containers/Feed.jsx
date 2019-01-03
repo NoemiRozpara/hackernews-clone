@@ -7,7 +7,8 @@ import getFeed from '../actions'
 const mapStateToProps = state => ({
     stories: state.feed.stories,
     error: state.feed.error,
-    loading: state.feed.loading
+    loading: state.feed.loading,
+    currentCat: state.feed.currentCat
 });
 
 const mapDispatchToProps = dispatch => ({

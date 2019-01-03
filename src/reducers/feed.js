@@ -1,7 +1,8 @@
 let initialState = {
     loading: false,
     stories: [],
-    error: false
+    error: false,
+    currentCat: 'best'
 };
 
 const feed = (state = initialState, action) => {
@@ -26,13 +27,19 @@ const feed = (state = initialState, action) => {
 
         case 'INSERT_ITEM':
             let stories = [...state.stories];
-            if(stories.indexOf(action.payload) === -1) 
+            if( ! stories.some((item) => item.id == action.payload.id) ) 
                 stories.push(
                     action.payload
                 )
             return {
                 ...state,
                 stories
+            }
+
+        case 'CHANGE_CURRENT_CAT':
+            return {
+                ...state, 
+                currentCat: action.payload
             }
 
         default:

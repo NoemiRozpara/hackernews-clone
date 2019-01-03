@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Nav = () => {
-
+const Nav = (props) => {
+    console.log(props.currentCat)
     return (
         <nav>
-            <span>Newest</span>
-            <span>Featured</span>
-            <span>Best</span>
+            <span onClick={() => props.changeCurrentCat('new')}>New</span>
+            <span onClick={() => props.changeCurrentCat('top')}>Top</span>
+            <span onClick={() => props.changeCurrentCat('best')}>Best</span>
         </nav>
     )
 }

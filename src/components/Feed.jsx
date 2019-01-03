@@ -3,7 +3,7 @@ import React from 'react'
 class Feed extends React.Component {
 
     componentDidMount(){
-        this.props.getFeed('new');
+        this.props.getFeed(this.props.currentCat);
     }
 
     render(){
@@ -11,7 +11,7 @@ class Feed extends React.Component {
         // console.log(this.props.error)
         return (
             <div className="feed">
-                <p>Feed</p>
+                <p>Feed {this.props.loading}</p>
                 <div>
                 {this.props.stories.map((story, index) => {
                     return <a key={index} href={story.url} target="_bank">

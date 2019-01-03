@@ -7,14 +7,19 @@ export const fetchSuccess = () => ({
     type: 'FETCH_SUCCESS'
 })
 
-export const fetchFailure = (e) => ({
+export const fetchFailure = (err) => ({
     type: 'FETCH_FAILURE',
-    payload: e
+    payload: err
 })
 
 export const insertItem = (item) => ({
     type: 'INSERT_ITEM',
     payload: item
+})
+
+export const changeCurrentCat = (cat) => ({
+    type: 'CHANGE_CURRENT_CAT',
+    payload: cat
 })
 
 // function fetchFeed(category = 'best') {
@@ -77,7 +82,7 @@ async function fetchFeedItem (id = 0) {
 
   
 const getFeed = (category) => {
-  
+    console.log(category);
     return async dispatch => {
         dispatch(feedLoading(true));
         let ids, res;
@@ -87,7 +92,7 @@ const getFeed = (category) => {
             dispatch(fetchFailure(e));
             dispatch(feedLoading(false));
         }
-        if(res.body.length > 0) {
+        if(res.body) {
             ids = JSON.parse(res.body)
             try {
                 ids.map(async (id, index) => {
@@ -97,7 +102,8 @@ const getFeed = (category) => {
                         dispatch(insertItem(item))
                     }
                 })
-                dispatch(fetchSuccess(ids))
+                dispatch(fetchSuccess(ids));
+                dispatch(feedLoading(false));
             } catch (e) {
                 console.log(e)
             }

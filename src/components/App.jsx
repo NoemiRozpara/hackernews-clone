@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import logo from '../media/logo.svg';
+import React from 'react';
 import '../styles/App.css';
 import Nav from '../containers/Nav'
 import Feed from '../containers/Feed'
