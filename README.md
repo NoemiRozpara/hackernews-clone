@@ -5,7 +5,7 @@
 * Save links to read later list
 * Dark theme for night readers
 
-## Build 
+## Running
 ```
 $ yarn build 
 $ yarn start
